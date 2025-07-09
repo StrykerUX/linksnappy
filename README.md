@@ -2,12 +2,12 @@
 
 **Snap your links, share instantly**
 
-A modern, lightning-fast URL shortener built with Next.js and Express. Create short links with powerful analytics, QR codes, and beautiful UI.
+A modern, lightning-fast URL shortener built with Next.js. Create short links with powerful analytics, QR codes, and beautiful UI. Features hybrid storage system supporting both JSON files and PostgreSQL.
 
 ![LinkSnappy](https://img.shields.io/badge/LinkSnappy-URL%20Shortener-blue)
 ![MIT License](https://img.shields.io/badge/License-MIT-green)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![Express](https://img.shields.io/badge/Express-4.18-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Optional-blue)
 
 ## ✨ Features
 
@@ -15,19 +15,20 @@ A modern, lightning-fast URL shortener built with Next.js and Express. Create sh
 - **📊 Analytics Dashboard** - Track clicks, views, and performance metrics
 - **📱 QR Code Generation** - Automatic QR codes for all shortened links
 - **🎨 Modern UI** - Clean, responsive design with Tailwind CSS
-- **🔒 No Database Required** - Simple JSON file storage
-- **⚡ Easy Deploy** - One-click deployment to Vercel
+- **🔄 Hybrid Storage** - Choose between JSON files or PostgreSQL
+- **⚡ Easy Deploy** - One-click deployment to Vercel, Dokploy, or any platform
 - **📈 Real-time Stats** - Live analytics and click tracking
 - **🔗 Custom Short Codes** - 6-character unique identifiers
+- **🔒 Production Ready** - Scalable with PostgreSQL for high-traffic apps
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS
-- **Backend**: Express.js, Node.js
-- **Storage**: JSON file system (no database needed)
+- **Backend**: Next.js API Routes
+- **Storage**: Hybrid system - JSON files or PostgreSQL
 - **QR Codes**: qrcode library
 - **Icons**: Lucide React
-- **Deployment**: Vercel
+- **Deployment**: Vercel, Dokploy, Railway, or any Node.js platform
 
 ## 🚀 Quick Start
 
@@ -56,18 +57,12 @@ A modern, lightning-fast URL shortener built with Next.js and Express. Create sh
    Edit `.env.local` with your configuration:
    ```env
    BASE_URL=http://localhost:3000
-   PORT=3001
-   NEXT_PUBLIC_API_URL=http://localhost:3001/api
+   STORAGE_TYPE=json  # or 'postgresql'
+   # For PostgreSQL (optional):
+   # DATABASE_URL=postgresql://user:password@localhost:5432/linksnappy
    ```
 
-4. **Run the development servers**
-   
-   In one terminal (Backend):
-   ```bash
-   npm run dev:server
-   ```
-   
-   In another terminal (Frontend):
+4. **Run the development server**
    ```bash
    npm run dev
    ```
@@ -75,21 +70,56 @@ A modern, lightning-fast URL shortener built with Next.js and Express. Create sh
 5. **Open your browser**
    Navigate to `http://localhost:3000`
 
+## 🔄 Hybrid Storage System
+
+LinkSnappy supports two storage backends that you can switch between using environment variables:
+
+### 📁 JSON Storage (Default)
+Perfect for development, small projects, and portfolios:
+```env
+STORAGE_TYPE=json
+```
+- ✅ **Zero setup** - Works immediately
+- ✅ **Portable** - Single file storage
+- ✅ **Simple** - Perfect for demos and development
+
+### 🐘 PostgreSQL Storage
+Ideal for production and high-traffic applications:
+```env
+STORAGE_TYPE=postgresql
+DATABASE_URL=postgresql://user:password@host:5432/database
+```
+- ✅ **Scalable** - Handles thousands of URLs
+- ✅ **Concurrent** - Multiple server instances
+- ✅ **Production ready** - ACID compliance and backups
+
+### 🔄 Easy Migration
+Switch between storage types anytime by changing environment variables. No code changes required!
+
 ## 📁 Project Structure
 
 ```
 linksnappy/
 ├── app/                          # Next.js App Router
+│   ├── api/                     # API Routes
+│   │   ├── shorten/            # URL shortening endpoint
+│   │   ├── redirect/           # Redirect handler
+│   │   ├── analytics/          # Analytics endpoints
+│   │   └── urls/               # List all URLs
+│   ├── lib/                     # Utility libraries
+│   │   └── storage/            # Storage system
+│   │       ├── interface.ts    # Storage interface
+│   │       ├── json-storage.ts # JSON file storage
+│   │       ├── postgresql-storage.ts # PostgreSQL storage
+│   │       └── factory.ts      # Storage factory
 │   ├── page.tsx                 # Homepage with URL shortener
 │   ├── layout.tsx               # Root layout
 │   ├── globals.css              # Global styles
 │   ├── redirect/[shortCode]/    # Redirect handler
 │   └── analytics/[shortCode]/   # Analytics dashboard
-├── server.js                    # Express backend server
-├── data/                        # JSON storage directory
-│   └── urls.json               # URL storage (auto-generated)
+├── data/                        # JSON storage directory (auto-generated)
+│   └── urls.json               # URL storage (JSON mode)
 ├── public/                      # Static assets
-├── vercel.json                  # Vercel deployment config
 └── README.md                    # This file
 ```
 
@@ -100,8 +130,9 @@ linksnappy/
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `BASE_URL` | Base URL for your deployment | `http://localhost:3000` |
-| `PORT` | Backend server port | `3001` |
-| `NEXT_PUBLIC_API_URL` | Frontend API URL | `http://localhost:3001/api` |
+| `STORAGE_TYPE` | Storage backend (`json` or `postgresql`) | `json` |
+| `DATABASE_URL` | PostgreSQL connection string | Not required for JSON mode |
+| `NODE_ENV` | Environment mode | `development` |
 
 ### API Endpoints
 
@@ -205,18 +236,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Next.js** for the amazing React framework
 - **Tailwind CSS** for the utility-first CSS framework
 - **Lucide React** for the beautiful icons
-- **Vercel** for the excellent deployment platform
+- **PostgreSQL** for the robust database system
 
 ## 📞 Support
 
 If you have any questions or need help:
 
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/linksnappy/issues)
-- **Email**: your.email@example.com
-- **Twitter**: [@yourusername](https://twitter.com/yourusername)
+- **GitHub Issues**: [Create an issue](https://github.com/StrykerUX/linksnappy/issues)
+- **Documentation**: Check the README and code comments
 
 ---
 
-Made with ❤️ by [Abraham Stryker](https://github.com/abraham-stryker)
+Made with ❤️ by Abraham Stryker
 
 **LinkSnappy** - Snap your links, share instantly! 🔗⚡

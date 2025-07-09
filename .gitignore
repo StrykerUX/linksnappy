@@ -17,8 +17,8 @@ out/
 build/
 
 # Data files
-data/
-*.json
+data/urls.json
+data/*.json
 
 # IDE
 .vscode/

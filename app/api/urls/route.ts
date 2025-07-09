@@ -1,23 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readData } from '@/app/lib/storage';
+import { StorageFactory } from '@/app/lib/storage/factory';
 
 export async function GET(request: NextRequest) {
   try {
-    const data = readData();
-    const urls = Object.values(data).map(url => ({
-      shortCode: url.shortCode,
-      originalUrl: url.originalUrl,
-      clicks: url.clicks,
-      createdAt: url.createdAt,
-      lastAccessed: url.lastAccessed
-    }));
-
-    // Sort by creation date (newest first)
-    urls.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const storage = await StorageFactory.getStorage();
+    const urls = await storage.getAll();
 
     return NextResponse.json({
       success: true,
-      urls
+      urls: urls.map(url => ({
+        shortCode: url.shortCode,
+        originalUrl: url.originalUrl,
+        clicks: url.clicks,
+        createdAt: url.createdAt,
+        lastAccessed: url.lastAccessed
+      }))
     });
 
   } catch (error) {

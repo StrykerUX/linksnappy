@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import QRCode from 'qrcode';
-import { 
-  readData, 
-  writeData, 
-  isValidUrl, 
-  generateShortCode, 
-  getBaseUrl,
-  UrlData 
-} from '@/app/lib/storage';
+import { StorageFactory, isValidUrl, generateShortCode, getBaseUrl } from '@/app/lib/storage/factory';
+import { UrlData } from '@/app/lib/storage/interface';
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,11 +14,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const data = readData();
+    const storage = await StorageFactory.getStorage();
     let shortCode = generateShortCode();
     
     // Ensure unique short code
-    while (data[shortCode]) {
+    while (await storage.exists(shortCode)) {
       shortCode = generateShortCode();
     }
 
@@ -45,8 +39,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Store URL data
-    data[shortCode] = urlData;
-    writeData(data);
+    await storage.create(shortCode, urlData);
 
     return NextResponse.json({
       success: true,

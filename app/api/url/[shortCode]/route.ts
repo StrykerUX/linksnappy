@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readData } from '@/app/lib/storage';
+import { StorageFactory } from '@/app/lib/storage/factory';
 
 export async function GET(
   request: NextRequest,
@@ -7,9 +7,10 @@ export async function GET(
 ) {
   try {
     const { shortCode } = params;
-    const data = readData();
+    const storage = await StorageFactory.getStorage();
     
-    if (!data[shortCode]) {
+    const urlData = await storage.findByShortCode(shortCode);
+    if (!urlData) {
       return NextResponse.json(
         { error: 'URL not found' },
         { status: 404 }
@@ -18,7 +19,7 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      ...data[shortCode]
+      ...urlData
     });
 
   } catch (error) {

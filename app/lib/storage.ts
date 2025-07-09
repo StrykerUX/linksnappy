@@ -78,6 +78,6 @@ export const generateShortCode = (): string => {
 export const getBaseUrl = (): string => {
   return process.env.BASE_URL || 
          process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
-         process.env.NODE_ENV === 'production' ? 'https://your-domain.com' :
+         process.env.NODE_ENV === 'production' ? 'https://linksnappy.imstryker.com' :
          'http://localhost:3000';
 };

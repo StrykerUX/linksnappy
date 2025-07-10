@@ -51,7 +51,7 @@ export default function RootLayout({
                   </nav>
                   <div className="flex items-center space-x-2 text-sm text-gray-500">
                     <span>by</span>
-                    <a href="https://github.com/abraham-stryker" className="font-medium text-brand-600 hover:text-brand-700">@abraham.stryker</a>
+                    <a href="https://imstryker.com" className="font-medium text-brand-600 hover:text-brand-700">@abraham.stryker</a>
                   </div>
                 </div>
               </div>
@@ -71,6 +71,14 @@ export default function RootLayout({
                 <p className="text-gray-500 text-xs mt-2">
                   Snap your links, share instantly
                 </p>
+                <div className="mt-4 flex justify-center space-x-6">
+                  <a href="https://github.com/strykerux" className="text-gray-500 hover:text-brand-600 transition-colors text-xs">
+                    GitHub
+                  </a>
+                  <a href="https://imstryker.com" className="text-gray-500 hover:text-brand-600 transition-colors text-xs">
+                    Website
+                  </a>
+                </div>
               </div>
             </div>
           </footer>

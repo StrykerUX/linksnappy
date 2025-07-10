@@ -4,10 +4,13 @@
 
 A modern, lightning-fast URL shortener built with Next.js. Create short links with powerful analytics, QR codes, and beautiful UI. Features hybrid storage system supporting both JSON files and PostgreSQL.
 
+🚀 **[Live Demo](https://linksnappy.imstryker.com/)** - Try it now!
+
 ![LinkSnappy](https://img.shields.io/badge/LinkSnappy-URL%20Shortener-blue)
 ![MIT License](https://img.shields.io/badge/License-MIT-green)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Optional-blue)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-success)](https://linksnappy.imstryker.com/)
 
 ## ✨ Features
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   BarChart3, 
@@ -23,13 +23,13 @@ interface AnalyticsData {
 }
 
 interface AnalyticsPageProps {
-  params: {
+  params: Promise<{
     shortCode: string
-  }
+  }>
 }
 
 export default function AnalyticsPage({ params }: AnalyticsPageProps) {
-  const { shortCode } = params
+  const { shortCode } = React.use(params)
   const router = useRouter()
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [urlData, setUrlData] = useState<any>(null)

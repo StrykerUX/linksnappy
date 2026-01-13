@@ -34,9 +34,7 @@ const nextConfig = {
       }
     ];
   },
-  experimental: {
-    serverComponentsExternalPackages: ['qrcode']
-  }
+  serverExternalPackages: ['qrcode']
 };
 
 module.exports = nextConfig;

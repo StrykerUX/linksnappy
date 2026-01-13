@@ -1,17 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ExternalLink, AlertCircle, BarChart3 } from 'lucide-react'
 
 interface RedirectPageProps {
-  params: {
+  params: Promise<{
     shortCode: string
-  }
+  }>
 }
 
 export default function RedirectPage({ params }: RedirectPageProps) {
-  const { shortCode } = params
+  const { shortCode } = React.use(params)
   const router = useRouter()
   const [url, setUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)

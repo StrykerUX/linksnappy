@@ -3,10 +3,10 @@ import { StorageFactory } from '@/app/lib/storage/factory';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { shortCode: string } }
+  { params }: { params: Promise<{ shortCode: string }> }
 ) {
   try {
-    const { shortCode } = params;
+    const { shortCode } = await params;
     const storage = await StorageFactory.getStorage();
     
     const urlData = await storage.findByShortCode(shortCode);
